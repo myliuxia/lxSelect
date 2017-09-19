@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="lx_selectStyle.css"/>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js" ></script>
+		<script type="text/javascript" src="lx_selectStyle.js" ></script>
+	</head>
+	<body>
+		<h3>背景</h3>
+		<p>因原有项目中又很多select下拉选择框，为了不影响其页面结构，表单提交数据和原有js对select的修改，所以设计了这个插件。</p>
+		<h3>简介</h3>
+		<p>这个插件基于是基于jquery开发使用，使用方式简单：</p>
+		<div>
+			<select name="openBankName" id="openBankName" >
+				<option value="" >请选择</option>
+				<option value="人民银行">中国人民银行</option>
+				<option value="工商银行">中国工商银行</option>
+				<option value="农业银行">中国农业银行</option>
+				<option value="中国银行">中国银行</option>
+				<option value="建设银行">中国建设银行</option>
+				<option value="农业发展">中国农业发展银行</option>
+				<option value="交通银行">交通银行</option>
+				<option value="中信银行">中信银行</option>
+				<option value="光大银行">光大银行</option>
+				<option value="民生银行">民生银行</option>
+				<option value="广东发展">广东发展银行</option>
+				<option value="深圳发展">深圳发展银行</option>
+				<option value="招商银行">招商银行</option>
+				<option value="兴业银行">兴业银行</option>
+				<option value="浦东发展">上海浦东发展银行</option>
+				<option value="北京银行">北京银行</option>
+				<option value="农村商业">农村商业银行</option>
+				<option value="农村信用">农村信用社</option>
+				<option value="城市信用">城市信用社</option>
+				<option value="邮政储蓄">中国邮政储蓄银行</option>
+				<option value="华夏银行">中国华夏银行</option>
+			</select>
+			<script>
+                function BB(idx){
+                    $("#openBankName").find("option:eq("+idx+")").prop("selected",true).change();
+                }
+
+                function A(idx){
+                    $("#openBankName").find("option:eq("+idx+")").prop("",true).change();
+                }
+
+                $("#openBankName").Lx_SelectInit({
+					width : 160,//下拉框固定宽度
+                    height : 35,//下拉框高度也是行高
+                    maxWidth : 300,//下拉框下拉选项最大宽度
+                    optionMinNum : 3,//下拉框下拉选项最小展示条数
+                    optionMaxNum : 8,//下拉框下拉选项最大展示条数
+                    zIndex:10 });
+			</script>
+		</div>
+	<a href="javascript:BB(4);">BB</a>
+	</body>
+
+</html>
