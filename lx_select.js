@@ -15,6 +15,16 @@
 		 * @param {Object} opt 传入参数集合
 		 */
 		Lx_SelectInit:function(opt){
+            var defaultOpt = {
+                width : 160,//下拉框固定宽度
+                height : 30,//下拉框高度也是行高
+                maxWidth : 300,//下拉框下拉选项最大宽度
+                optionMinNum : 3,//下拉框下拉选项最小展示条数
+                optionMaxNum : 8,//下拉框下拉选项最大展示条数
+                zIndex:100
+            }
+            var opts = $.extend({},defaultOpt,opt);
+
 			var $select = $(this);
 			var selectId = $select.attr("id");
 			var $options = $select.children("option");
@@ -26,14 +36,15 @@
 			var selected_idx = 0;//选中项的序列
 			var disabled = [];//禁止选择选项
 			var parameter = {
-				width : getValue(opt.width , 150),//下拉框固定宽度
-				height : getValue(opt.height , 30),//下拉框高度也是行高
-				maxWidth : getValue(opt.maxWidth , 300),//下拉框下拉选项最大宽度
-				optionMinNum : getValue(opt.optionMinNum , 3),//下拉框下拉选项最小展示条数
-				optionMaxNum : getValue(opt.optionMaxNum , 10),//下拉框下拉选项最大展示条数
-				zIndex : getValue(opt.zIndex , 100),//展示层数
+                width : opts.width ,//下拉框固定宽度
+                height : opts.height ,//下拉框高度也是行高
+                maxWidth : opts.maxWidth ,//下拉框下拉选项最大宽度
+                optionMinNum : opts.optionMinNum ,//下拉框下拉选项最小展示条数
+                optionMaxNum : opts.optionMaxNum ,//下拉框下拉选项最大展示条数
+                zIndex : opts.zIndex,//展示层数
 			}
 			if($select.parent("#"+selectId+"_box").length>0){
+
 				return false;
 			}
 			
@@ -124,7 +135,7 @@
 				$options =$(this).children("option");
 				for(var i = 0;i<$options.length;i++){
 				   if($(this).children("option:eq("+i+")").prop("disabled")){
-				   	  ul.find("li:eq("+i+")").removeClass("enabled").addClass("disabled"); 
+				   	  ul.find("li:eq("+i+")").removeClass("enabled").addClass("disabled");
 				   }else{
 				   	  ul.find("li:eq("+i+")").removeClass("disabled").addClass("enabled"); 
 				   }
@@ -132,8 +143,15 @@
 			});
 			
 			select_show.click(function(){
-				selectShowClick(this);
+                if($select.attr("disabled")!="disabled") {//判断是否禁用
+                    selectShowClick(this);
+                    $(".lx_select_box .lx_select_show").not(this).removeClass("unfold");
+                    $(".lx_select_box .lx_select_show").not(this).parent(".lx_select_box").css("z-index", parameter.zIndex);
+                    $(".lx_select_box .lx_select_show").not(this).siblings("ul.lx_select_option").hide();
+                }
 			})
+
+			//绑定键盘事件
 			select_show.keydown(function(event){
 				console.log("keydown");
 			  	var key = event.keyCode;
@@ -188,23 +206,28 @@
 	/*点击事件*/
 	function selectShowClick(_this){
 		var $option = $(_this).siblings(".lx_select_option");
+		var zIndex = $(_this).parent(".lx_select_box").css("z-index");
 		if($option.is(":hidden")){
 			$option.show();
-			$(_this).parent(".lx_select_box").css("z-index","101");
+			$(_this).parent(".lx_select_box").css("z-index",parseInt(zIndex)+1);
 			$(_this).addClass("unfold");
 		}else{
 			$option.hide();
-			$(_this).parent(".lx_select_box").css("z-index","100");
+			$(_this).parent(".lx_select_box").css("z-index",parseInt(zIndex)-1);
 			$(_this).removeClass("unfold");
 		}
 	}
+	//选项点击事件
 	function selectOptionClick(_this){
-		var $selected = $(_this).text();
-		//给显示框赋值	
-		$(_this).parents(".lx_select_box").css("z-index","100");
-		toSelected(_this);
-		$(_this).parent().hide();
-		$(_this).parents(".lx_select_box").siblings(".lx_select_show").removeClass("unfold");
+		if( ! $(_this).hasClass("disabled")){
+            var zIndex = $(_this).parent(".lx_select_box").css("z-index");
+            //给显示框赋值
+            $(_this).parents(".lx_select_box").css("z-index",parseInt(zIndex)-1);
+            toSelected(_this);
+            $(_this).parent().hide();
+            $(_this).parents(".lx_select_box").siblings(".lx_select_show").removeClass("unfold");
+		}
+
 	}
 	
 	/*根据选中值，选中select中的对应项*/
