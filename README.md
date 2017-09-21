@@ -26,7 +26,7 @@ $("#openBankName").Lx_SelectInit({
 > 如js改变select的状态请触发change事件：
 ```
 $("#openBankName").find("option:eq(3)").prop("selected",true).change();//选中第三个选项
-$("#openBankName").find("option:eq(4)").prop("",true).change();//禁用第四个选项
+$("#openBankName").find("option:eq(4)").prop("disabled",true).change();//禁用第四个选项
 
 ```
 
