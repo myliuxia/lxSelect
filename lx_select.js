@@ -9,6 +9,8 @@
  */
 
 (function( $ ){
+    "use strict"
+
 	$.fn.extend({
 		/**
 		 * 初始化方法
@@ -225,7 +227,7 @@
             $(_this).parents(".lx_select_box").css("z-index",parseInt(zIndex)-1);
             toSelected(_this);
             $(_this).parent().hide();
-            $(_this).parents(".lx_select_box").siblings(".lx_select_show").removeClass("unfold");
+            $(_this).parent().siblings(".lx_select_show").removeClass("unfold");
 		}
 
 	}
