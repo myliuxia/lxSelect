@@ -29,6 +29,8 @@ $("#openBankName").find("option:eq(3)").prop("selected",true).change();//选中�
 $("#openBankName").find("option:eq(4)").prop("disabled",true).change();//禁用第四个选项
 
 ```
+> 效果图如下：
+![Image text](effect/effect/png)
 
 以上就是这个插件的一些介绍和使用方法，初次分享自己的代码，还存在很多问题。希望各位多多给予指正
 
